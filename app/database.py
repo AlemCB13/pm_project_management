@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     postgres_user: str
@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     postgres_db: str
     postgres_host: str
     postgres_port: str
+    app_host: str
+    app_port: str
 
     class Config:
         env_file = ".env"
