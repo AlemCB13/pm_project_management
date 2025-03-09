@@ -4,7 +4,7 @@ services:
   pm_project_management:
     build: .
     ports:
-      - "8082:8000"  # Expone el puerto 8000 del contenedor como 8082 en el host
+      - "8082:8080"  # Expone el puerto 8080 del contenedor como 8082 en el host
     depends_on:
       - pm_user_management_db
     env_file:
