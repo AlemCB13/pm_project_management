@@ -8,7 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout código fuente
         uses: actions/checkout@v3
@@ -18,12 +17,14 @@ jobs:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           HOST: ${{ secrets.EC2_HOST }}
           USER: ubuntu
+          ENV_FILE: ${{ secrets.ENV_FILE }}  # Usa el secreto que contiene el contenido de .env
         run: |
           echo "$PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST << 'EOF'
-            cd ~/pm_project_management
-            git pull origin main
-            docker-compose down
-            docker-compose up --build -d
+          cd ~/pm_project_management
+          echo "$ENV_FILE" > .env
+          git pull origin main
+          docker-compose down
+          docker-compose up --build -d
           EOF
